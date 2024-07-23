@@ -61,6 +61,16 @@
     extraGroups = [ "docker" "wheel" ];
   };
 
+  # Add wrapper for restic
+  # This allows members of wheel group to run restic as root
+  security.wrappers.restic = {
+    source = "${pkgs.restic.out}/bin/restic";
+    owner = "root";
+    group = "wheel";
+    permissions = "u=rwx,g=wx,o=";
+    capabilities = "cap_dac_read_search=+ep";
+  };
+
   # Manually set /etc/resolv.conf contents
   environment.etc = {
     "resolv.conf".text = ''
