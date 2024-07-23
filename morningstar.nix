@@ -8,6 +8,9 @@
     ./mounts.nix
   ];
 
+  # Set hostname
+  networking.hostName = "morningstar";
+
   # Install extra packages
   environment.systemPackages = with pkgs; [
     vim
@@ -52,8 +55,10 @@
   # Extra config for user nick
   users.groups.nick.gid = 1000;
   users.users.nick = {
+    isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "docker" "nick" ];
+    group = "nick";
+    extraGroups = [ "docker" "wheel" ];
   };
 
   # Manually set /etc/resolv.conf contents
